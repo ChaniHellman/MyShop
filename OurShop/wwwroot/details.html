@@ -1,0 +1,21 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <script defer src="details.js"></script>
+    <link rel="stylesheet" href="Style.css" type="text/css" />
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+
+    <h1 id=welcome ></h1>
+    <button onclick="showUpdate()"> show</button>
+    <div id="update" class="hide">
+        <input id="fullName" type="text" placeholder="full name" required />
+        <input id="email" type="email" placeholder="email" required />
+        <input id="password" type="password" placeholder="password" maxlength="15" required />
+        <input id="phone" type="number" placeholder="phone" />
+        <button onclick="updateUser()"> update </button>
+    </div>
+</body>
+</html>

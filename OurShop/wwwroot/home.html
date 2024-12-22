@@ -1,10 +1,10 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
- <script defer src="home.js"></script>
-  <link rel="stylesheet" href="Style.css" type="text/css" />
-  <meta charset="utf-8" />
-   <title></title>
+    <script defer src="home.js"></script>
+    <link rel="stylesheet" href="Style.css" type="text/css" />
+    <meta charset="utf-8" />
+    <title></title>
 </head>
 <body>
 
@@ -13,11 +13,11 @@
     <button onclick="login()">login </button>
     <button onclick="show()">add new user </button>
     <div id="sign" class="hide">
-        <input  id="fullName" type="text" placeholder="full name" required />
-        <input  id="email" type="email" placeholder="email" required />
-        <input  id="password" type="password" placeholder="password"  required onblur="fillProgress()"/>
-        <progress id="progress" max="4" value="0" ></progress>
-        <input  id="phone" type="number" placeholder="phone" />
+        <input id="firstName" type="text" placeholder="first name" required />
+        <input id="lastName" type="text" placeholder="last name" required />
+        <input id="email" type="email" placeholder="email" required />
+        <input id="password" type="password" placeholder="password" required onblur="fillProgress()" />
+        <progress id="progress" max="4" value="0"></progress>
         <button onclick="createUser()">sign in </button>
     </div>
 </body>

@@ -1,11 +1,11 @@
 ﻿
 
 const getDataFromDocument = () => {
-    const fullName = document.querySelector("#fullName").value;
+    const firstName = document.querySelector("#firstName").value;
+    const lastName = document.querySelector("#lastName").value;
     const email = document.querySelector("#email").value;
-    const phone = document.querySelector("#phone").value;
     const password = document.querySelector("#password").value;
-    return { fullName, email, phone, password }
+    return { firstName, lastName, email, password }
 }
 
 const createUser = async () => {
@@ -18,15 +18,16 @@ const createUser = async () => {
             },
             body: JSON.stringify(user)
         });
-        if (!responsePost.ok) { 
-           
-            alert("Error,plese try again")}
+        if (!responsePost.ok) {
+
+            alert("Error,plese try again")
+        }
         else {
             const dataPost = await responsePost.json();
-            alert(`User ${dataPost.fullName} created!`)
+            alert(`User ${dataPost.firstName} created!`)
         }
         checkPasswordStrength(user.password)
-       
+
     }
     catch (error) {
         console.log(error)
@@ -52,7 +53,7 @@ const getDataFromLogin = () => {
 const login = async () => {
     const data = getDataFromLogin();
     try {
-        const responsePost = await fetch(`api/users/login/?email=${data.email}&password=${data.password}`, {
+        const responsePost = await fetch(`api/Users/login/?email=${data.email}&password=${data.password}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -62,17 +63,17 @@ const login = async () => {
                 password: data.password
             }
         });
-        if (responsePost.status==204)
-        alert("User not found")
-        if (!responsePost.ok) 
-        alert("Eror,please try again")
+        if (responsePost.status == 204)
+            alert("User not found")
+        if (!responsePost.ok)
+            alert("Eror,please try again")
         else {
             const dataPost = await responsePost.json();
-            
-        sessionStorage.setItem("id", dataPost.id)
-        sessionStorage.setItem("userName", dataPost.fullName)
-         alert(`${dataPost.fullName} login `)
-         window.location.href = "details.html"
+
+            sessionStorage.setItem("UserId", dataPost.userId)
+            sessionStorage.setItem("userName", dataPost.firstName)
+            alert(`${dataPost.firstName} login `)
+            window.location.href = "details.html"
         }
     }
     catch (error) {
@@ -83,8 +84,8 @@ const login = async () => {
 const updateUser = async () => {
     const user = getDataFromDocument();
     try {
-        const id = sessionStorage.getItem("id")
-        const responsePut = await fetch(`api/users/${id}`, {
+        const UserId = sessionStorage.getItem("UserId")
+        const responsePut = await fetch(`api/users/${UserId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -95,7 +96,7 @@ const updateUser = async () => {
             alert("Eror,please try again")
         else {
             const dataPut = await responsePut.json();
-            alert(`${dataPut.fullName} updated `)
+            alert(`${dataPut.firstName} updated `)
         }
     }
     catch (error) {
@@ -103,7 +104,7 @@ const updateUser = async () => {
     }
 
 }
-const  checkPasswordStrength = async ( password) => {
+const checkPasswordStrength = async (password) => {
     try {
         const passwordStrength = await fetch(`api/users/passwordStrength?password=${password}`, {
             method: 'POST',
@@ -116,16 +117,16 @@ const  checkPasswordStrength = async ( password) => {
         });
         const p = await passwordStrength.json()
         return p;
-       
+
     }
     catch (error) {
         console.log(error)
     }
 }
-const fillProgress = async ()=>{
+const fillProgress = async () => {
     const progress = document.getElementById("progress")
     const password = document.getElementById("password").value
     const passwordStrength = await checkPasswordStrength(password);
     progress.value = passwordStrength;
-   
+
 }

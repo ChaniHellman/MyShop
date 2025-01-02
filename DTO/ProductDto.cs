@@ -6,6 +6,6 @@ using System.Threading.Tasks;
 
 namespace DTO
 {
-    public record ProductDto(string productName, decimal price, string description, string categoryCategoryName);
+    public record ProductDto(int productId, string productName, decimal price, string description, string imageUrl, string categoryCategoryName);
     
 }

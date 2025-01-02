@@ -1,12 +1,33 @@
-﻿<!DOCTYPE html>
+﻿﻿
+<!DOCTYPE html>
 <html>
 <head>
-    <script src="../Scripts/Products.js"></script>
-    <link href="../client/Products.css" rel="stylesheet" />
+    <script src="../Js/Products.js"></script>
+    <link href="../Css/Products.css" rel="stylesheet" />
 
     <meta charset="utf-8" />
     <title></title>
-   
+    <template id="temp-card">
+        <div class="card">
+            <div class="img-w">
+                <img src="" alt="" style="width:100%">
+            </div>
+            <h1></h1>
+            <p class="price"></p>
+            <p class="description"></p>
+            <p><button>הוסף לסל</button></p>
+        </div>
+    </template>
+    <template id="temp-category">
+        <div class="cb checkbox">
+            <input type="checkbox" class="opt" id="" value="">
+            <label for="">
+                <span class="OptionName"></span>
+                <span class="Count"></span>
+                <!--</a>-->
+            </label>
+        </div>
+    </template>
 </head>
 <body>
     <header>
@@ -16,13 +37,13 @@
             <section class="QuickLinks">
                 <ul>
                     <li class="" data-section="myAccount">
-                        <a href="#" title="כניסה לצפייה בפרטי החשבון"  onclick="TrackLinkID(this);"  accesskey="h">החשבון שלי</a>
+                        <a href="#" title="כניסה לצפייה בפרטי החשבון" onclick="TrackLinkID(this);" accesskey="h">החשבון שלי</a>
                     </li>
                     <li>
                         <a href="#" title="קניה מהירה">קניה מהירה</a>
                     </li>
                     <li>
-                        <a href="#" title="עזרה - שאלות נפוצות, כיצד לקנות באינטרנט, מדריך ועוד"  target="_blank">עזרה</a>
+                        <a href="#" title="עזרה - שאלות נפוצות, כיצד לקנות באינטרנט, מדריך ועוד" target="_blank">עזרה</a>
                     </li>
                 </ul>
             </section>
@@ -49,7 +70,7 @@
         <div class="ResultCount" style="position: absolute; top: 0px;">
             <a class="Clear" href="">נקה הכל</a>
             <div><span id="counter">  </span> מוצרים</div>
-           
+
             <div>
                 <span id="counter">
 
@@ -65,7 +86,7 @@
             <input type="text" id="nameSearch" class="floatRight" placeholder="חיפוש לפי שם מוצר">
 
             <button class="floatRight" tabindex="0" onclick="filterProducts()">
-                <span class="header42"><img src="Images/searchIcon.svg" alt="סמל חיפוש"></span>
+                <span class="header42"><img src="../Public/searchIcon.svg" alt="סמל חיפוש"></span>
             </button>
         </div>
         <div id="priceRangeFilter" class="filterBreak">
@@ -77,33 +98,13 @@
             <input type="text" maxlength="9" id="maxPrice" class="priceInputText">
             <span class="priceCurrency">₪</span>
             <button onclick="filterProducts()">
-                <span><img src="Images/searchIcon.svg" alt="סמל חיפוש"></span>
+                <span><img src="../Public/searchIcon.svg" alt="סמל חיפוש"></span>
             </button>
         </div>
     </div>
 
-    <div id="PoductList">
-        <!--<template id="temp-card">-->
-            <div class="card">
-                <div class="img-w">
-                    <img src="Wtrmel_2.jpg" alt="" style="width:100%">
-                </div>
-                <h1></h1>
-                <p class="price"></p>
-                <p class="description"></p>
-                <p><button>הוסף לסל</button></p>
-            </div>
-       <!-- </template>-->
-        <!--<template id="temp-category">-->
-            <div class="cb checkbox">
-                <input type="checkbox" class="opt" id="" value="">
-                <label for="">
-                    <span class="OptionName"></span>
-                    <span class="Count"></span>
-                    </a>
-                </label>
-            </div>
-        <!--</template>-->
+    <div id="ProductList">
+
     </div>
     <div class="pagination">
         <a href="#">&laquo;</a>

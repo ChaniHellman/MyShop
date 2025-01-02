@@ -106,14 +106,14 @@ const updateUser = async () => {
 }
 const checkPasswordStrength = async (password) => {
     try {
-        const passwordStrength = await fetch(`api/users/passwordStrength?password=${password}`, {
+        const passwordStrength = await fetch(`api/users/passwordStrength/?password=${password}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
-            },
-            query: {
-                password: password
             }
+            //query: {
+            //    password: password
+            //}
         });
         const p = await passwordStrength.json()
         return p;

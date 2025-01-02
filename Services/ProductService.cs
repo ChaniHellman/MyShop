@@ -17,9 +17,9 @@ namespace Services
         }
 
 
-        public async Task<List<Product>> getProducts()
+        public async Task<List<Product>> getProducts(string? desc, int? minPrice, int? maxPrice, int?[] categoryIds)
         {
-            return await _productRepository.getProducts();
+            return await _productRepository.getProducts(desc, minPrice, maxPrice, categoryIds);
 
         }
 

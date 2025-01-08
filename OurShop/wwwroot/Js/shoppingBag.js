@@ -1,7 +1,29 @@
 ﻿
+
 window.addEventListener("load", loadPage = () => {
     getCartItems();
+    setQuantityAndTotalPrice();
+    sessionStorage.setItem("UserId", "1")//למחוק כשהלוגין יעבוד....
+
 });
+
+let totalPrice =0
+
+let quantity= 0
+
+const setQuantityAndTotalPrice = () => {
+    const cartItems = JSON.parse(sessionStorage.getItem("cartItems") || "[]");
+    cartItems.forEach(item => {
+        quantity += item.quantity;
+        totalPrice += item.quantity * item.price;
+    })
+    setTextTotals();
+}
+
+const setTextTotals = () => {
+    document.querySelector("#itemCount").textContent = quantity 
+    document.querySelector("#totalAmount").textContent = totalPrice
+}
 
 const getCartItems = () => {
     const cartItems = JSON.parse(sessionStorage.getItem("cartItems") || "[]");
@@ -37,6 +59,10 @@ const deleteFromCart = (item) => {
 
     itemIndex = cartItems.findIndex(item => item.productId === id)//תזכורת: לשאול האם צריך לנהל כמות מוצר
 
+    quantity--;
+    totalPrice -= item.price;
+    setTextTotals()
+
     if (item.quantity > 1) {  
         itemIndex = cartItems.findIndex(item => item.productId === id)
         cartItems[itemIndex].quantity--
@@ -51,11 +77,49 @@ const deleteFromCart = (item) => {
 
 }
 
-const placeOrder = () => {
-    let total = 0;
-    const cartItems = JSON.parse(sessionStorage.getItem("cartItems") || "[]");
-    cartItems.forEach(item => {
-        total += item.quantity * item.price
+const getTodaysDate = () => {
+    const today = new Date(); 
+    const year = today.getFullYear(); 
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`
+}
+
+const placeOrder = async () => {
+    let id = sessionStorage.getItem("UserId")
+    const date = getTodaysDate();
+    console.log(date)
+    const products = []
+    const cart = JSON.parse(sessionStorage.getItem("cartItems") || "[]");
+    cart.forEach(item => {
+        products.push({
+            "quantity": item.quantity,
+            "productId": item.productId
+        })
     })
-    console.log(`total price: ${total}`)
+    const order = {
+        "orderDate": date,
+        "userId": id,
+        "orderSum": totalPrice,
+        "orderItems": products
+    }
+    try {
+        const responsePost = await fetch(`/api/Ordrs`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(order)
+            
+        });
+        if (!responsePost.ok)
+            alert("Eror,please try again")
+        else {
+            console.log(responsePost)
+        }
+    }
+    catch (error) {
+        console.log(error)
+    }
+
 }

@@ -50,13 +50,13 @@ p.description{
     height:65px;
 }
 .bar::before {
-    content: 'חנות הצעצועים שלי';
+    content: 'מסעדת השף';
     color: white;
     /* display: inline-block; */
     position: absolute;
     /* margin: 0 auto; */
     /* display: block; */
-    top: 8px;
+    top: 22px;
     left: 51%;
     font-family: Helvetica;
 }

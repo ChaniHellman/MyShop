@@ -1,26 +1,10 @@
-﻿const welcomeText = () => {
-    const welcomeText = document.getElementById("welcome")
-    welcomeText.textContent = `Hi ${sessionStorage.getItem("userName")},you'v connected successfuly! lets dive in...`
-}
-welcomeText();
-const getDataFromDocument = () => {
-    const firstName = document.querySelector("#firstName").value;
-    const lastName = document.querySelector("#lastName").value;
-    const email = document.querySelector("#email").value;
-    const password = document.querySelector("#password").value;
-    return { firstName, lastName, email, password }
-}
-
-const showUpdate = async () => {
+﻿const showUpdate = async () => {
     const updatepDiv = document.getElementById("update")
     updatepDiv.className = "show"
     try {
-        const UserId = sessionStorage.getItem("UserId")
-        const responseGet = await fetch(`api/users/${UserId}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            }
+        const id = sessionStorage.getItem("UserId")
+        const responseGet = await fetch(`/api/Users/${id}`, {
+            method: 'GET'
         });
         if (responseGet.ok) {
             const dataGet = await responseGet.json();
@@ -34,13 +18,28 @@ const showUpdate = async () => {
     }
 }
 
+const welcomeText = () => {
+    const welcomeText = document.getElementById("welcome")
+    welcomeText.textContent = `Hi ${sessionStorage.getItem("userName")},you'v connected successfuly! lets dive in...`
+}
+welcomeText();
+const getDataFromDocument = () => {
+    const firstName = document.querySelector("#firstName").value;
+    const lastName = document.querySelector("#lastName").value;
+    const email = document.querySelector("#email").value;
+    const password = document.querySelector("#password").value;
+    return { firstName, lastName, email, password }
+}
+
+
+
 const updateUser = async () => {
     const user = getDataFromDocument();
 
 
     try {
-        const UserId = sessionStorage.getItem("UserId")
-        const responsePut = await fetch(`api/users/${UserId}`, {
+        const id = sessionStorage.getItem("UserId")
+        const responsePut = await fetch(`/api/users/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'

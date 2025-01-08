@@ -11,6 +11,9 @@ namespace DTO
    public record returnPostUserDto(string email, string firstName, string lastName);
     public record returnLoginUserDto(int userId, string email, string firstName, string lastName);
 
+    public record LoginDto(string email, string password);
+
+
 
 
 

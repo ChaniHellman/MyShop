@@ -11,7 +11,7 @@ const getDataFromDocument = () => {
 const createUser = async () => {
     const user = getDataFromDocument();
     try {
-        const responsePost = await fetch('api/users', {
+        const responsePost = await fetch('/api/users', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -53,15 +53,15 @@ const getDataFromLogin = () => {
 const login = async () => {
     const data = getDataFromLogin();
     try {
-        const responsePost = await fetch(`api/Users/login/?email=${data.email}&password=${data.password}`, {
+        const responsePost = await fetch('/api/Users/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            query: {
+            body: JSON.stringify({
                 email: data.email,
                 password: data.password
-            }
+            })
         });
         if (responsePost.status == 204)
             alert("User not found")
@@ -85,14 +85,14 @@ const updateUser = async () => {
     const user = getDataFromDocument();
     try {
         const UserId = sessionStorage.getItem("UserId")
-        const responsePut = await fetch(`api/users/${UserId}`, {
+        const responsePut = await fetch(`/api/users/${UserId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(user)
         });
-        if (!responsePost.ok)
+        if (!responsePut.ok)
             alert("Eror,please try again")
         else {
             const dataPut = await responsePut.json();
@@ -106,7 +106,7 @@ const updateUser = async () => {
 }
 const checkPasswordStrength = async (password) => {
     try {
-        const passwordStrength = await fetch(`api/users/passwordStrength/?password=${password}`, {
+        const passwordStrength = await fetch(`/api/users/passwordStrength/?password=${password}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

@@ -23,6 +23,8 @@ namespace OurShop
             CreateMap<Order,returnOrderDto>();
             CreateMap<OrderPostDto, returnOrderDto>();
 
+            CreateMap<Order, returnOrdersListDto>();
+
 
         }
     }

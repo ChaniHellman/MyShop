@@ -8,15 +8,25 @@ window.addEventListener("load", loadPage = () => {
     if (fromShoppingBag === "1") {
         const cartItems = JSON.parse(sessionStorage.getItem("cartItems") || "[]");
         sessionStorage.setItem("cartItems", JSON.stringify(cartItems));
-        let bagSum = 0 //המספר על אייקון הסל
-        cartItems.forEach(item => {
-            bagSum += item.quantity
-        })
-        document.querySelector("#ItemsCountText").textContent = bagSum
+        setBagSum();
     }
     else
         sessionStorage.setItem("cartItems", "")
 });
+let bagSum = 0
+
+const setBagSum = () => {
+    const cartItems = JSON.parse(sessionStorage.getItem("cartItems") || "[]");
+    cartItems.forEach(item => {
+        bagSum += item.quantity
+    })
+    setTextBagSum()
+}
+
+const setTextBagSum = () => {
+    document.querySelector("#ItemsCountText").textContent = bagSum
+}
+
 
 let categoryIds = [];
 let paramObject = { desc:null, minPrice:null, maxPrice:null, categoryIds:null }
@@ -132,11 +142,8 @@ const addToCart = (product) => {
         cartItems.push(product)
     }
 
-    let bagSum = 0
-    cartItems.forEach(item => {
-        bagSum += item.quantity
-    })
-    document.querySelector("#ItemsCountText").textContent = bagSum
-
+    bagSum++
+    setTextBagSum()
+    
     sessionStorage.setItem("cartItems", JSON.stringify(cartItems));
 }

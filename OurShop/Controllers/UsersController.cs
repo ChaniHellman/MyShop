@@ -26,7 +26,7 @@ namespace OurShop.Controllers
 
         // GET api/<UsersController>/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> Get(int id)
+        public async Task<ActionResult<UserByIdDto>> Get(int id)
         {
             User checkUser = await _userService.getUserById(id);
             if (checkUser != null)
@@ -68,9 +68,12 @@ namespace OurShop.Controllers
 
         }
         [HttpPost("login")]
-        public async Task<ActionResult<User>> Login([FromQuery] string email, [FromQuery] string password)
-
+        public async Task<ActionResult<returnLoginUserDto>> Login([FromBody] LoginDto loginDto)
         {
+            
+            string email = loginDto.email;
+            string password = loginDto.password;
+
             User checkUser = await _userService.loginUser(email, password);
             if (checkUser != null)
                 return Ok(_mapper.Map<User, returnLoginUserDto>(checkUser));

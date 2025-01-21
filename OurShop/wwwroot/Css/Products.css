@@ -2,6 +2,16 @@
     direction:rtl;
     margin:0;
     padding:0;
+
+}
+body {
+    background-image: url('../Public/restaurant.jpeg');
+    background-size: cover; /* מוודא שהתמונה תתאים לגודל המסך */
+    background-position: center; /* ממרכז את התמונה */
+    background-repeat: no-repeat; /* מונע שכפול של התמונה */
+    background-attachment: fixed; /* מוודא שהתמונה תישאר במקום בעת גלילה */
+    margin: 0; /* מבטל רווחים מסביב לדף */
+    padding: 0; /* מבטל רווחים פנימיים */
 }
 
 * {
@@ -36,14 +46,20 @@ ul{
     margin: auto;
     text-align: center;
     font-family: arial;
-    padding:15px;
-    float:left;
-    height:550px;
-    margin:6px;
+    padding: 15px;
+    float: left;
+    height: 550px;
+    margin: 6px;
+    background-color: rgba(225, 225, 225, 0.9);
+    border-radius:1vh;
 }
 
 .img-w{
     height:300px;
+}
+
+img {
+    border-radius: 1vh;
 }
 
 p.description{
@@ -52,14 +68,21 @@ p.description{
 .bar::before {
     content: 'מסעדת השף';
     color: white;
+    font-size:3vh;
     /* display: inline-block; */
     position: absolute;
     /* margin: 0 auto; */
     /* display: block; */
-    top: 22px;
-    left: 51%;
+    top: 30px;
+    left: 46%;
     font-family: Helvetica;
 }
+
+.bar {
+    background-color: rgba(0, 0, 0, 0.7);
+    height: 35px;
+}
+
 .price {
     color: grey;
     font-size: 22px;
@@ -80,10 +103,7 @@ p.description{
 .card button:hover {
     opacity: 0.7;
 }
-.bar {
-    background-color: black;
-    height: 35px;
-}
+
 
 .Icon {
     background-image: url(../Public/BagActive.png);
@@ -158,9 +178,9 @@ p.description{
 
 .Filters {
     position: absolute;
-    width: 184px;
+    width: 150px;
     float: right;
-    margin: 4px 4px;
+    margin: 0px 0px;
     padding-top: 50px;
     padding-bottom: 10px;
     position: absolute;
@@ -169,7 +189,6 @@ p.description{
     font-family: Arial;
     font-size: 14px;
     min-height:100%;
-
 }
 .nameFilter input {
     width: 70%;

@@ -1,15 +1,11 @@
-﻿
+﻿let totalPrice = 0
+let quantity = 0
 
 window.addEventListener("load", loadPage = () => {
     getCartItems();
     setQuantityAndTotalPrice();
-    sessionStorage.setItem("UserId", "1")//למחוק כשהלוגין יעבוד....
 
 });
-
-let totalPrice =0
-
-let quantity= 0
 
 const setQuantityAndTotalPrice = () => {
     const cartItems = JSON.parse(sessionStorage.getItem("cartItems") || "[]");
@@ -57,7 +53,7 @@ const deleteFromCart = (item) => {
     const cartItems = JSON.parse(sessionStorage.getItem("cartItems") || "[]");
     const id = item.productId
 
-    itemIndex = cartItems.findIndex(item => item.productId === id)//תזכורת: לשאול האם צריך לנהל כמות מוצר
+    let itemIndex = cartItems.findIndex(item => item.productId === id)//תזכורת: לשאול האם צריך לנהל כמות מוצר
 
     quantity--;
     totalPrice -= item.price;
@@ -113,9 +109,10 @@ const placeOrder = async () => {
             
         });
         if (!responsePost.ok)
-            alert("Eror,please try again")
+            alert("Error, please try again")
         else {
             console.log(responsePost)
+            localStorage.removeItem
         }
     }
     catch (error) {

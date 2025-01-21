@@ -1,24 +1,29 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="he">
 <head>
-    <script src="../Js/home.js"></script>
-    <link rel="stylesheet" href="../Style.css" type="text/css" />
     <meta charset="utf-8" />
-    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../Css/Home.css" type="text/css" />
+    <title>התחברות</title>
 </head>
-<body>
+<body class="login-background">
 
-    <input id="emailLogin" type="email" placeholder="email" required />
-    <input id="passwordLogin" type="password" placeholder="password" maxlength="15" required />
-    <button onclick="login()">login </button>
-    <button onclick="show()">add new user </button>
-    <div id="sign" class="hide">
-        <input id="firstName" type="text" placeholder="first name" required />
-        <input id="lastName" type="text" placeholder="last name" required />
-        <input id="email" type="email" placeholder="email" required />
-        <input id="password" type="password" placeholder="password" required onblur="fillProgress()" />
-        <progress id="progress" max="4" value="0"></progress>
-        <button onclick="createUser()">sign in </button>
+    <div class="login-container">
+        <h2>התחברות</h2>
+        <input id="emailLogin" type="email" placeholder="דואר אלקטרוני" required />
+        <input id="passwordLogin" type="password" placeholder="סיסמה" maxlength="15" required />
+        <button onclick="login()">התחבר</button>
+        <button onclick="showSignUp()">הירשם</button>
+        <div id="sign" class="hide">
+            <input id="firstName" type="text" placeholder="שם פרטי" required />
+            <input id="lastName" type="text" placeholder="שם משפחה" required />
+            <input id="email" type="email" placeholder="דואר אלקטרוני" required />
+            <input id="password" type="password" placeholder="סיסמה" required onblur="fillProgress()" />
+            <progress id="progress" max="4" value="0"></progress>
+            <button onclick="createUser()">הרשם</button>
+        </div>
     </div>
+
+    <script src="../Js/home.js"></script>
 </body>
 </html>

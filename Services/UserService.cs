@@ -42,8 +42,6 @@ namespace Services
         public int checkPasswordStrength(string password)
         {
             return Zxcvbn.Core.EvaluatePassword(password).Score;
-
-
         }
 
 

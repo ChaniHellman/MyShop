@@ -48,7 +48,7 @@ namespace OurShop.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest();
+                return BadRequest(e);
             }
 
         }
@@ -57,12 +57,12 @@ namespace OurShop.Controllers
         {
             try
             {
-                await _userService.updateUser(id, _mapper.Map<addUserDto,User>(userToUpdate));
-
+                User user = _mapper.Map<addUserDto, User>(userToUpdate);
+                await _userService.updateUser(id, user);
             }
-            catch (Exception e)
+            catch (Exception error)
             {
-                return BadRequest();
+                return BadRequest(error);
             }
             return Ok();
 
@@ -75,10 +75,10 @@ namespace OurShop.Controllers
             string password = loginDto.password;
 
             User checkUser = await _userService.loginUser(email, password);
-            if (checkUser != null)
+            //if (checkUser != null)
                 return Ok(_mapper.Map<User, returnLoginUserDto>(checkUser));
-            else
-                return NotFound();
+            //else
+            //    return NotFound();
 
 
         }

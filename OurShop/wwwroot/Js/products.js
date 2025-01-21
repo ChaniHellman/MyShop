@@ -1,36 +1,37 @@
-﻿
+﻿let bagSum = 0
+let categoryIds = [];
+let paramObject = { desc: null, minPrice: null, maxPrice: null, categoryIds: null }
+
 window.addEventListener("load", loadPage = () => {
     getProducts();
     getCategories();
-    const urlParams = new URLSearchParams(window.location.search);
-    const fromShoppingBag = urlParams.get("fromShoppingBag");
+    checkShoppingBagFlag();
+});
 
-    if (fromShoppingBag === "1") {
+const checkShoppingBagFlag = () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const fromShoppingBagFlag = urlParams.get("fromShoppingBag");
+
+    if (fromShoppingBagFlag === "1") {
         const cartItems = JSON.parse(sessionStorage.getItem("cartItems") || "[]");
         sessionStorage.setItem("cartItems", JSON.stringify(cartItems));
-        setBagSum();
+        updateBagSum();
     }
     else
         sessionStorage.setItem("cartItems", "")
-});
-let bagSum = 0
+}
 
-const setBagSum = () => {
+const updateBagSum = () => {
     const cartItems = JSON.parse(sessionStorage.getItem("cartItems") || "[]");
     cartItems.forEach(item => {
         bagSum += item.quantity
     })
-    setTextBagSum()
+    updateTextBagSum()
 }
 
-const setTextBagSum = () => {
+const updateTextBagSum = () => {
     document.querySelector("#ItemsCountText").textContent = bagSum
 }
-
-
-let categoryIds = [];
-let paramObject = { desc:null, minPrice:null, maxPrice:null, categoryIds:null }
-
 
 const getProducts = async () => {
 
@@ -44,22 +45,38 @@ const getProducts = async () => {
         categoryIds.forEach(id => params.append("categoryIds", id));
     }
     try {
-        const responseGet = await fetch(`/api/Products/?${params}`, {
+        const response = await fetch(`/api/Products/?${params}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
             }
         });
-        if (!responseGet.ok)
-            alert("Eror,please try again")
+        if (!response.ok)
+            alert("Error, please try again")
         else {
-            drawProducts(await responseGet.json());
+            drawProducts(await response.json());
         }
     }
     catch (error) {
         console.log(error)
     }
 
+}
+
+
+const drawProducts = (productList) => {
+    const tempCard = document.querySelector("template#temp-card")
+    const productContainer = document.querySelector("#ProductList")
+    productContainer.innerHTML = "";
+    productList.forEach(product => {
+        const clone = tempCard.content.cloneNode(true);
+        clone.querySelector(".img-w").querySelector("img").src = `${product.imageUrl}`
+        clone.querySelector("h1").textContent = product.productName
+        clone.querySelector(".price").textContent = product.price
+        clone.querySelector("button").addEventListener("click", (e) => { addToCart(product) })
+        productContainer.appendChild(clone)
+
+    })
 }
 
 const getCategories = async () => {
@@ -71,7 +88,7 @@ const getCategories = async () => {
             }
         });
         if (!responseGet.ok)
-            alert("Eror,please try again")
+            alert("Error, please try again")
         else {
             drawCategories(await responseGet.json());
         }
@@ -82,20 +99,6 @@ const getCategories = async () => {
 
 }
 
-const drawProducts = (productList) => {
-    const tempCard = document.querySelector("template#temp-card")
-    const productContainer = document.querySelector("#ProductList")
-    productContainer.innerHTML = "";
-    productList.forEach(product => {
-        const clone = tempCard.content.cloneNode(true);
-        clone.querySelector(".img-w").querySelector("img").src = `${product.imageUrl}`
-        clone.querySelector("h1").textContent = product.productName
-        clone.querySelector(".price").textContent = product.price
-        clone.querySelector("button").addEventListener("click", (e) => {addToCart(product)})
-        productContainer.appendChild(clone)
-
-    })
-}
 
 const drawCategories = (categoryList) => {
     const tempCategory = document.querySelector("template#temp-category")
@@ -133,7 +136,7 @@ const filterProducts = () => {
 
 const addToCart = (product) => {
     const cartItems = JSON.parse(sessionStorage.getItem("cartItems") || "[]");
-    productIndex = cartItems.findIndex(item => item.productId === product.productId)
+    const productIndex = cartItems.findIndex(item => item.productId === product.productId)
 
     if (productIndex !== -1)
         cartItems[productIndex].quantity++
@@ -143,7 +146,7 @@ const addToCart = (product) => {
     }
 
     bagSum++
-    setTextBagSum()
+    updateTextBagSum()
     
     sessionStorage.setItem("cartItems", JSON.stringify(cartItems));
 }

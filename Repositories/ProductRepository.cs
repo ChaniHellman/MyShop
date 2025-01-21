@@ -13,10 +13,10 @@ using System.Threading.Tasks;
 
 namespace Repositories
 {
-    public class Productrepository : IProductrepository
+    public class ProductRepository : IProductrepository
     {
         _328177589ShopApiContext _shopContext;
-        public Productrepository(_328177589ShopApiContext shopContext)
+        public ProductRepository(_328177589ShopApiContext shopContext)
         {
             _shopContext = shopContext;
         }

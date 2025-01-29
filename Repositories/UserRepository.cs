@@ -15,8 +15,8 @@ namespace Repositories
 {
     public class UserRepository : IUserRepository
     {
-        _328177589ShopApiContext _shopContext;
-        public UserRepository(_328177589ShopApiContext shopContext)
+        MyShopContext _shopContext;
+        public UserRepository(MyShopContext shopContext)
         {
             _shopContext = shopContext;
         }

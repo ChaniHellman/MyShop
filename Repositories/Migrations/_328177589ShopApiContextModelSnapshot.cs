@@ -10,7 +10,7 @@ using Repositories;
 
 namespace Repositories.Migrations
 {
-    [DbContext(typeof(_328177589ShopApiContext))]
+    [DbContext(typeof(MyShopContext))]
     partial class _328177589ShopApiContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

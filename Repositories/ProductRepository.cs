@@ -15,8 +15,8 @@ namespace Repositories
 {
     public class ProductRepository : IProductrepository
     {
-        _328177589ShopApiContext _shopContext;
-        public ProductRepository(_328177589ShopApiContext shopContext)
+        MyShopContext _shopContext;
+        public ProductRepository(MyShopContext shopContext)
         {
             _shopContext = shopContext;
         }

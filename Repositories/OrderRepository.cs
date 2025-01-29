@@ -10,8 +10,8 @@ namespace Repositories
 {
     public class OrderRepository : IOrderRepository
     {
-        _328177589ShopApiContext _shopContext;
-        public OrderRepository(_328177589ShopApiContext shopContext)
+        MyShopContext _shopContext;
+        public OrderRepository(MyShopContext shopContext)
         {
             _shopContext = shopContext;
         }

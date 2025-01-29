@@ -9,9 +9,9 @@ namespace Repositories
 {
     public class RatingRepository : IRatingRepository
     {
-        _328177589ShopApiContext _shopContext;
+        MyShopContext _shopContext;
 
-        public RatingRepository(_328177589ShopApiContext shopContext)
+        public RatingRepository(MyShopContext shopContext)
         {
             _shopContext = shopContext;
         }

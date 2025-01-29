@@ -5,13 +5,13 @@ using Entities;
 
 namespace Repositories;
 
-public partial class _328177589ShopApiContext : DbContext
+public partial class MyShopContext : DbContext
 {
-    public _328177589ShopApiContext()
+    public MyShopContext()
     {
     }
 
-    public _328177589ShopApiContext(DbContextOptions<_328177589ShopApiContext> options)
+    public MyShopContext(DbContextOptions<MyShopContext> options)
         : base(options)
     {
     }

@@ -27,7 +27,7 @@ namespace OurShop.MiddleWares
                 _logger.LogError(ex, "An error occured while processing the request");
                 httpContext.Response.StatusCode= StatusCodes.Status500InternalServerError;
                 await httpContext.Response.WriteAsync("An unexpected error...");
-                    }
+            }
 
         }
     }

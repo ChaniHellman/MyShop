@@ -11,7 +11,7 @@ using Repositories;
 
 namespace Repositories.Migrations
 {
-    [DbContext(typeof(_328177589ShopApiContext))]
+    [DbContext(typeof(MyShopContext))]
     [Migration("20241230102210_MyShop_Api")]
     partial class MyShop_Api
     {

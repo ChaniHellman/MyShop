@@ -10,8 +10,8 @@ namespace Repositories
 {
     public class CategoryRepository : ICategoryRepository
     {
-        _328177589ShopApiContext _shopContext;
-        public CategoryRepository(_328177589ShopApiContext shopContext)
+        MyShopContext _shopContext;
+        public CategoryRepository(MyShopContext shopContext)
         {
             _shopContext = shopContext;
         }

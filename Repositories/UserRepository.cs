@@ -23,7 +23,7 @@ namespace Repositories
 
         public async Task<User> getUserById(int id)
         {
-            User user = await _shopContext.Users.Include(u=>u.Orders).FirstOrDefaultAsync(e => e.UserId == id);
+            User user = await _shopContext.Users.Include(u => u.Orders).FirstOrDefaultAsync(e => e.UserId == id);
             return user;
 
 
@@ -37,16 +37,26 @@ namespace Repositories
         public async Task<User> loginUser(string email, string password)
         {
             return await _shopContext.Users.FirstOrDefaultAsync(user => user.Email == email && user.Password == password);
-             
+
         }
         public async Task updateUser(int id, User newUser)
         {
-            newUser.UserId = id;
-            _shopContext.Update(newUser);
+            var existingUser = await _shopContext.Users.FindAsync(id);
+            if (existingUser == null)
+            {
+                return; 
+            }
+
+            // עדכון השדות
+            existingUser.FirstName = newUser.FirstName;
+            existingUser.LastName = newUser.LastName;
+            existingUser.Email = newUser.Email;
+            existingUser.Password = newUser.Password;
+
             await _shopContext.SaveChangesAsync();
-
-
         }
+
+
 
     }
 }

@@ -111,8 +111,10 @@ const placeOrder = async () => {
         if (!responsePost.ok)
             alert("Error, please try again")
         else {
-            console.log(responsePost)
-            localStorage.removeItem
+            const orderData = await responsePost.json();  
+            alert(`Order ${orderData.orderId} placed successfully!`);
+            console.log("Order response:", orderData);
+            sessionStorage.removeItem("cartItems");
         }
     }
     catch (error) {

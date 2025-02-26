@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DTO;
+using DTO.DTO;
 using Entities;
 namespace OurShop
 {
@@ -11,7 +12,7 @@ namespace OurShop
             CreateMap<User, UserByIdDto>();
             CreateMap<addUserDto,User>();
             CreateMap<UserByIdDto, User>();
-            CreateMap<addUserDto,returnPostUserDto>();
+            CreateMap<addUserDto, returnPostUserDto>();
             CreateMap<User, returnLoginUserDto>();
             CreateMap<Category, getCategoryDto>();
             CreateMap<OrderItem, OrderItemDto>();

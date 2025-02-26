@@ -5,6 +5,7 @@ using Entities;
 using Services;
 using DTO;
 using AutoMapper;
+using DTO.DTO;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -41,9 +42,13 @@ namespace OurShop.Controllers
         {
             try
             {
+
                 User ParsedUser = _mapper.Map<addUserDto, User>(user);
-                await _userService.AddUser(ParsedUser);
-                
+                User returnedUser = await _userService.AddUser(ParsedUser);
+                if (returnedUser == null)
+                {
+                    return Conflict();
+                }
                 return CreatedAtAction(nameof(Get), new { id = ParsedUser.UserId }, _mapper.Map<addUserDto, returnPostUserDto>(user));
             }
             catch (Exception e)

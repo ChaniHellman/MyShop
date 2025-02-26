@@ -149,4 +149,10 @@ const addToCart = (product) => {
     updateTextBagSum()
     
     sessionStorage.setItem("cartItems", JSON.stringify(cartItems));
+
+
+}
+
+const AccountDetails = () => {
+    window.location.href = "details.html";
 }

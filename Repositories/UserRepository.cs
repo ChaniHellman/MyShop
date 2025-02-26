@@ -28,16 +28,24 @@ namespace Repositories
 
 
         }
-        public async Task<User> addUser(User user)
+
+        public async Task<User?> addUser(User user)
         {
+            // בדיקה אם האימייל כבר קיים
+            bool emailExists = await _shopContext.Users.AnyAsync(u => u.Email == user.Email);
+            if (emailExists)
+            {
+                return null; // או להחזיר שגיאה מתאימה
+            }
+
             await _shopContext.Users.AddAsync(user);
             await _shopContext.SaveChangesAsync();
-            return (user);
+            return user;
         }
+
         public async Task<User> loginUser(string email, string password)
         {
             return await _shopContext.Users.FirstOrDefaultAsync(user => user.Email == email && user.Password == password);
-
         }
         public async Task updateUser(int id, User newUser)
         {

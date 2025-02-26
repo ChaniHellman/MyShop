@@ -29,11 +29,11 @@ var connectionString = builder.Configuration.GetConnectionString("Home");
 builder.Services.AddDbContext<MyShopContext>(options => options.UseSqlServer(connectionString));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Host.UseNLog();
+//builder.Host.UseNLog();
 
 var app = builder.Build();
 
-app.UseHandleErrorMiddleWare();
+//app.UseHandleErrorMiddleWare();
 
 if (app.Environment.IsDevelopment())
 {

@@ -6,12 +6,45 @@ using System.Threading.Tasks;
 
 namespace DTO
 {
-   public record UserByIdDto(string email, string firstName, string lastName, List<returnOrdersListDto> orders);
-   public record addUserDto(string email, string firstName, string lastName, string password);
-   public record returnPostUserDto(string email, string firstName, string lastName);
-    public record returnLoginUserDto(int userId, string email, string firstName, string lastName);
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
 
-    public record LoginDto(string email, string password);
+    namespace DTO
+    {
+        public record UserByIdDto(
+            [Required, EmailAddress] string email,
+            [Required, MinLength(1)] string firstName,
+            [Required, MinLength(1)] string lastName,
+            [Required] List<returnOrdersListDto> orders
+        );
+
+        public record addUserDto(
+            [Required, EmailAddress] string email,
+            [Required, MinLength(1)] string firstName,
+            [Required, MinLength(1)] string lastName,
+            [Required, MinLength(6)] string password 
+        );
+
+        public record returnPostUserDto(
+            [Required, EmailAddress] string email,
+            [Required, MinLength(1)] string firstName,
+            [Required, MinLength(1)] string lastName
+        );
+
+        public record returnLoginUserDto(
+            [Required] int userId,
+            [Required, EmailAddress] string email,
+            [Required, MinLength(1)] string firstName,
+            [Required, MinLength(1)] string lastName
+        );
+
+        public record LoginDto(
+            [Required, EmailAddress] string email,
+            [Required, MinLength(6)] string password
+        );
+    }
+
 
 
 

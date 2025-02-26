@@ -37,7 +37,11 @@ namespace Services
         }
         public Task updateUser(int id, User userToUpdate)
         {
-            return _userRepository.updateUser(id, userToUpdate);
+            int PasswordStrength = checkPasswordStrength(userToUpdate.Password);
+            if (PasswordStrength > 2) 
+                return _userRepository.updateUser(id, userToUpdate);
+            else
+                throw new Exception(PasswordStrength.ToString());
         }
         public int checkPasswordStrength(string password)
         {

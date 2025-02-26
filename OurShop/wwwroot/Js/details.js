@@ -29,6 +29,7 @@ const fillUpdateInputs = async () => {
         }
     }
     catch (error) {
+        alert(error)
         console.log(error)
     }
 }
@@ -56,12 +57,12 @@ const updateUser = async () => {
         });
         
         if (response.ok) {
-            const updatedUser = await response.json();
-            alert(`User ${updatedUser.firstName} updated successfully`);
+            alert(`User ${userForUpdate.firstName} updated successfully`);
         }
+        else 
+            alert("error, please try again.")
     }
     catch (error) {
-        console.log(error)
     }
 }
 

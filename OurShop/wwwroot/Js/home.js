@@ -19,6 +19,9 @@ const createUser = async () => {
             body: JSON.stringify(user)
         });
 
+        if (responsePost.status === 409) {
+            alert("username already taken!");
+        } else
         if (!responsePost.ok) {
             alert("Error, please try again");
         } else {

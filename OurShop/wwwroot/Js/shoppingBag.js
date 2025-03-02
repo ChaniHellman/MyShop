@@ -108,6 +108,10 @@ const placeOrder = async () => {
             body: JSON.stringify(order)
             
         });
+        if (responsePost.BadRequest) {
+            console.log(responsePost)
+            alert("Eror,please try again")
+        }
         if (!responsePost.ok)
             alert("Error, please try again")
         else {

@@ -27,21 +27,24 @@ namespace OurShop.Controllers
             return _mapper.Map<Order, returnOrderDto>(order);
         }
 
-        //[HttpPost]
-        //public async Task<ActionResult<Order>> addOrder(Order order)
-        //{
-
-        //    await _OrderService.addOrder(order);
-        //    return CreatedAtAction(nameof(getOrderById), new { id = order.OrderId }, _mapper.Map<Order, returnOrderDto>(order));
-        //}
 
         [HttpPost]
         public async Task<ActionResult<Order>> addOrder(OrderPostDto order)
         {
+            try
+            {
+                Order returnedOrder = await _OrderService.addOrder(_mapper.Map<OrderPostDto, Order>(order));
+                return CreatedAtAction(nameof(getOrderById), new { id = order.userId }, _mapper.Map<Order, returnOrderDto>(returnedOrder));
 
-            Order returnedOrder=await _OrderService.addOrder(_mapper.Map<OrderPostDto, Order>(order));
-            return CreatedAtAction(nameof(getOrderById), new { id = order.userId }, _mapper.Map<Order, returnOrderDto>(returnedOrder));
+            }
+            catch (InvalidOrderException ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+
         }
+
+       
 
     }
 }

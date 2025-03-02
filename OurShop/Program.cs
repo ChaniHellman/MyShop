@@ -30,7 +30,7 @@ builder.Services.AddDbContext<MyShopContext>(options => options.UseSqlServer(con
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 //builder.Host.UseNLog();
-
+builder.Services.AddMemoryCache();
 var app = builder.Build();
 
 //app.UseHandleErrorMiddleWare();

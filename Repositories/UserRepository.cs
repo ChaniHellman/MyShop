@@ -31,11 +31,10 @@ namespace Repositories
 
         public async Task<User?> addUser(User user)
         {
-            // בדיקה אם האימייל כבר קיים
             bool emailExists = await _shopContext.Users.AnyAsync(u => u.Email == user.Email);
             if (emailExists)
             {
-                return null; // או להחזיר שגיאה מתאימה
+                return null;
             }
 
             await _shopContext.Users.AddAsync(user);

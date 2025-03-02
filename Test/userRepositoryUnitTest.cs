@@ -4,6 +4,7 @@ using Moq.EntityFrameworkCore;
 using Repositories;
 using Xunit;
 using Microsoft.EntityFrameworkCore;
+using Services;
 
 
 namespace Test
@@ -76,10 +77,10 @@ namespace Test
         [Fact]
         public async Task AddUser_ValidUser_ReturnsUser()
         {
-            var user = new User { FirstName = "aaa", LastName = "bbb", Email = "chani@gmail.com", Password = "Chani$1234" };
+            var user = new User { FirstName = "aaa", LastName = "bbb", Email = "h@gmail.com", Password = "Chani$851" };
             var mockSet = new Mock<DbSet<User>>();
             var mockContext = new Mock<MyShopContext>();
-            mockContext.Setup(m => m.Users).Returns(mockSet.Object);
+            mockContext.Setup(x => x.Users).ReturnsDbSet(new List<User>());
             var userRepository = new UserRepository(mockContext.Object);
             var result = await userRepository.addUser(user);
             Assert.Equal(user, result);
@@ -92,14 +93,17 @@ namespace Test
         {
             var user = new User { UserId = 1, FirstName = "aaa", LastName = "bbb" };
             var mockContext = new Mock<MyShopContext>();
+            mockContext.Setup(x => x.Users).ReturnsDbSet(new List<User>() { user});
+            mockContext.Setup(x => x.SaveChangesAsync(default)).ReturnsAsync(1);
+            mockContext.Setup(x => x.Users.FindAsync(1)).ReturnsAsync(user);
 
             var userRepository = new UserRepository(mockContext.Object);
             var updatedUser = new User { FirstName = "updated", LastName = "user" };
 
             await userRepository.updateUser(1, updatedUser);
 
-            Assert.Equal(1, updatedUser.UserId);
-            mockContext.Verify(x => x.Update(updatedUser), Times.Once);
+            Assert.Equal("updated", user.FirstName);  
+            Assert.Equal("user", user.LastName); 
             mockContext.Verify(x => x.SaveChangesAsync(default), Times.Once);
         }
     }

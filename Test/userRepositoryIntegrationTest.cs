@@ -19,13 +19,13 @@ namespace Test
         [Fact]
         public async Task AddUser_ValidUser_ShouldSaveToDatabase()
         {
-            var user = new User { FirstName = "John", LastName = "Doe", Email = "john@exam", Password = "Pass123!" };
+            var user = new User { FirstName = "John", LastName = "Doe", Email = "j@exam", Password = "Pass123!" };
 
             var savedUser = await _userRepository.addUser(user);
 
             Assert.NotNull(savedUser);
             Assert.NotEqual(0, savedUser.UserId);
-            Assert.Equal("john@exam", savedUser.Email);
+            Assert.Equal("j@exam", savedUser.Email);
         }
 
         [Fact]

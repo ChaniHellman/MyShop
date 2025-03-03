@@ -1,15 +1,32 @@
 using Microsoft.EntityFrameworkCore;
+using NLog;
 using NLog.Web;
 using OurShop.MiddleWares;
 using Repositories;
 using Services;
-using System;
 
 
 var builder = WebApplication.CreateBuilder(args);
+string environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
-// Add services to the container.
+string connectionString;
+
+if (environment == "Home")
+{
+    connectionString = builder.Configuration.GetConnectionString("Home");
+}
+else if (environment == "School")
+{
+    connectionString = builder.Configuration.GetConnectionString("School");
+}
+else
+{
+    throw new Exception("Unknown environment");
+}
+//builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 
 builder.Services.AddControllers();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -20,21 +37,13 @@ builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IOrderService, OrderService>();
-builder.Services.AddScoped<IRatingRepository, RatingRepository>();
 builder.Services.AddScoped<IRatingService, RatingService>();
-
-var connectionString = builder.Configuration.GetConnectionString("Home");
-
-
+builder.Services.AddScoped<IRatingRepository, RatingRepository>();
 builder.Services.AddDbContext<MyShopContext>(options => options.UseSqlServer(connectionString));
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-//builder.Host.UseNLog();
+builder.Host.UseNLog();
 builder.Services.AddMemoryCache();
 var app = builder.Build();
-
-//app.UseHandleErrorMiddleWare();
-
+app.UseHandleErrorMiddleWare();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -44,11 +53,9 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
-
 app.UseAuthorization();
 
 app.UseRatingMiddleWare();
-
 
 app.MapControllers();
 

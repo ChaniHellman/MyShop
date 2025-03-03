@@ -40,7 +40,7 @@ namespace OurShop.Controllers
 
                 var cacheEntryOptions = new MemoryCacheEntryOptions
                 {
-                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(10)
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(30)
                 };
 
                 _cache.Set("CategoriesCache", categories, cacheEntryOptions);

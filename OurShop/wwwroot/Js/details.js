@@ -66,3 +66,7 @@ const updateUser = async () => {
     }
 }
 
+const backToHome=()=>{
+    window.location.href="Products.html"
+}
+

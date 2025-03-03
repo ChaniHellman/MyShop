@@ -57,7 +57,7 @@ namespace Services
             }
             if (totalPrice != order.OrderSum)
             {
-                _logger.LogWarning("Total price of order did not match the orderSum. Client: " + order.UserId);
+                _logger.LogCritical("Total price of order did not match the orderSum. Client: " + order.UserId);
                 return false;
             }
             return true;

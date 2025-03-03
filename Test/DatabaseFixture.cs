@@ -13,7 +13,7 @@ namespace Test
         public MyShopContext Context { get; private set; }
         public DatabaseFixture() {
             var options = new DbContextOptionsBuilder<MyShopContext>()
-                .UseSqlServer("Server=DESKTOP-E0FAPSB\\SQLEXPRESS;Database=Tests;Trusted_Connection=True;TrustServerCertificate=True").Options;
+                .UseSqlServer("Server=SRV2\\PUPILS;Database=Tests;Trusted_Connection=True;TrustServerCertificate=True").Options;
             Context = new MyShopContext(options);
             Context.Database.EnsureCreated();
         }

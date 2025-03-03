@@ -31,6 +31,7 @@ namespace Repositories
 
         public async Task<User?> addUser(User user)
         {
+
             bool emailExists = await _shopContext.Users.AnyAsync(u => u.Email == user.Email);
             if (emailExists)
             {

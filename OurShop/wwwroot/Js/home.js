@@ -8,8 +8,28 @@ const getUserInputs = () => {
     return { firstName, lastName, email, password };
 }
 
+const validateInputs = ({ firstName, lastName, email, password }) => {
+    if (!firstName || !lastName || !email || !password) {
+        alert("All fields must be filled out.");
+        return false;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        alert("Please enter a valid email address.");
+        return false;
+    }
+
+    return true;
+}
+
 const createUser = async () => {
     const user = getUserInputs();
+
+    if (!validateInputs(user)) {
+        return;
+    }
+
     try {
         const responsePost = await fetch(`${API_URL}`, {
             method: 'POST',
@@ -20,9 +40,8 @@ const createUser = async () => {
         });
 
         if (responsePost.status === 409) {
-            alert("username already taken!");
-        } else
-        if (!responsePost.ok) {
+            alert("Username already taken!");
+        } else if (!responsePost.ok) {
             alert("Error, please try again");
         } else {
             const dataPost = await responsePost.json();
@@ -52,8 +71,28 @@ const getLoginInputs = () => {
     return { email, password };
 }
 
+const validateLoginInputs = ({ email, password }) => {
+    if (!email || !password) {
+        alert("All fields must be filled out.");
+        return false;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        alert("Please enter a valid email address.");
+        return false;
+    }
+
+    return true;
+}
+
 const login = async () => {
     const data = getLoginInputs();
+
+    if (!validateLoginInputs(data)) {
+        return;
+    }
+
     try {
         const response = await fetch(`${API_URL}/login`, {
             method: 'POST',
@@ -74,7 +113,15 @@ const login = async () => {
             sessionStorage.setItem("userName", userData.firstName);
 
             alert(`${userData.firstName} logged in`);
-            window.location.href = "products.html";
+
+            const cartItems = JSON.parse(sessionStorage.getItem("cartItems") || "[]");
+            if (cartItems.length != 0) {
+                window.location.href = "Products.html?fromShoppingBag=1";
+            }
+            else {
+                window.location.href = "products.html";
+            }
+
         }
     }
     catch (error) {
@@ -84,6 +131,11 @@ const login = async () => {
 
 const updateUser = async () => {
     const user = getUserInputs();
+
+    if (!validateInputs(user)) {
+        return;
+    }
+
     try {
         const UserId = sessionStorage.getItem("UserId");
         const responsePut = await fetch(`${API_URL}/${UserId}`, {

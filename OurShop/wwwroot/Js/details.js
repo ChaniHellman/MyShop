@@ -1,9 +1,8 @@
-﻿
-const API_URL = '/api/users';
+﻿const API_URL = '/api/users';
 
 const writeWelcomeText = () => {
     const welcomeText = document.getElementById("welcome")
-    welcomeText.textContent = `Hi ${sessionStorage.getItem("userName")}, you have connected successfuly! lets dive in...`
+    welcomeText.textContent = `Hi ${sessionStorage.getItem("userName")}, you have connected successfully! Let's dive in...`
 }
 
 writeWelcomeText();
@@ -42,9 +41,27 @@ const getUpdateInputs = () => {
     return { firstName, lastName, email, password }
 }
 
-const updateUser = async () => {
+const validateInputs = ({ firstName, lastName, email, password }) => {
+    if (!firstName || !lastName || !email || !password) {
+        alert("All fields are required.");
+        return false;
+    }
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        alert("Please enter a valid email address.");
+        return false;
+    }
+
+    return true;
+}
+
+const updateUser = async () => {
     const userForUpdate = getUpdateInputs();
+
+    if (!validateInputs(userForUpdate)) {
+        return;
+    }
 
     try {
         const id = sessionStorage.getItem("UserId")
@@ -55,18 +72,18 @@ const updateUser = async () => {
             },
             body: JSON.stringify(userForUpdate)
         });
-        
+
         if (response.ok) {
             alert(`User ${userForUpdate.firstName} updated successfully`);
+        } else {
+            alert("Error, please try again.");
         }
-        else 
-            alert("error, please try again.")
-    }
-    catch (error) {
+    } catch (error) {
+        alert("An error occurred, please try again.");
+        console.log(error);
     }
 }
 
-const backToHome=()=>{
-    window.location.href="Products.html"
+const backToHome = () => {
+    window.location.href = "Products.html?fromShoppingBag=1"
 }
-

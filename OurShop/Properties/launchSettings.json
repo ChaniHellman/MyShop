@@ -26,7 +26,7 @@
       "launchUrl": "html/home.html",
       "applicationUrl": "https://localhost:7106;http://localhost:5086",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "School"
+        "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
     "IIS Express": {

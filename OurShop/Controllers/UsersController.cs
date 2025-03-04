@@ -18,11 +18,13 @@ namespace OurShop.Controllers
     {
         IUserService _userService;
         IMapper _mapper;
+        ILogger<User> _logger;
 
-        public UsersController(IUserService userService, IMapper mapper)
+        public UsersController(IUserService userService, IMapper mapper, ILogger<User> logger)
         {
             _userService = userService;
             _mapper = mapper;
+            _logger = logger;
         }
 
         // GET api/<UsersController>/5
@@ -72,6 +74,7 @@ namespace OurShop.Controllers
             return Ok();
 
         }
+
         [HttpPost("login")]
         public async Task<ActionResult<returnLoginUserDto>> Login([FromBody] LoginDto loginDto)
         {
@@ -80,8 +83,10 @@ namespace OurShop.Controllers
             string password = loginDto.password;
 
             User checkUser = await _userService.loginUser(email, password);
-            if (checkUser != null)
+            if (checkUser != null) {
+                _logger.LogInformation("User {UserId} logged in!", checkUser.UserId);
                 return Ok(_mapper.Map<User, returnLoginUserDto>(checkUser));
+            }
             else
                return NotFound();
 

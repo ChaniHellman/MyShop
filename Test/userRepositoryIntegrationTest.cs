@@ -8,7 +8,7 @@ namespace Test
     public class UserRepositoryIntegrationTest : IClassFixture<DatabaseFixture>
     {
         private readonly IUserRepository _userRepository;
-        public  MyShopContext _context;
+        private readonly MyShopContext _context;
 
         public UserRepositoryIntegrationTest(DatabaseFixture fixture)
         {
@@ -20,14 +20,14 @@ namespace Test
         public async Task AddUser_ValidUser_ShouldSaveToDatabase()
         {
 
-            var user = new User { FirstName = "John", LastName = "Doe", Email = "ll@exam", Password = "Pass123!" };
+            var user = new User { FirstName = "John", LastName = "Doe", Email = "psp@exam", Password = "Pass123!" };
 
             var savedUser = await _userRepository.addUser(user);
 
             Assert.NotNull(savedUser);
             Assert.NotEqual(0, savedUser.UserId);
-            Assert.Equal("ll@exam", savedUser.Email);
-            _context.Dispose();
+            Assert.Equal("psp@exam", savedUser.Email);
+            
 
         }
 
@@ -42,7 +42,7 @@ namespace Test
 
             Assert.NotNull(result);
             Assert.Equal(user.Email, result.Email);
-            _context.Dispose();
+         
 
         }
 
@@ -51,7 +51,7 @@ namespace Test
         {
             var result = await _userRepository.loginUser("invalid@ex", "WrongPass123");
             Assert.Null(result);
-            _context.Dispose();
+            
 
         }
 
@@ -66,7 +66,7 @@ namespace Test
 
             Assert.NotNull(foundUser);
             Assert.Equal(user.Email, foundUser.Email);
-            _context.Dispose();
+           
 
         }
 
@@ -75,8 +75,7 @@ namespace Test
         {
             var result = await _userRepository.getUserById(9999); 
             Assert.Null(result);
-            _context.Dispose();
-
+           
         }
 
         [Fact]
@@ -94,7 +93,6 @@ namespace Test
             Assert.NotNull(result);
             Assert.Equal("Tommy", result.FirstName);
             Assert.Equal("tommy@ex", result.Email);
-            _context.Dispose();
 
         }
 
@@ -107,7 +105,6 @@ namespace Test
 
             var result = await _userRepository.getUserById(nonExistingUser.UserId);
             Assert.Null(result);
-            _context.Dispose();
 
 
 

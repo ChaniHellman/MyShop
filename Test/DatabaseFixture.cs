@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace Test
 {
-    public class DatabaseFixture
+    public class DatabaseFixture: IDisposable
     {
         public MyShopContext Context { get; private set; }
         public DatabaseFixture() {
             var options = new DbContextOptionsBuilder<MyShopContext>()
-                .UseSqlServer("Server=SRV2\\PUPILS;Database=Tests;Trusted_Connection=True;TrustServerCertificate=True").Options;
+                .UseSqlServer("Server=SRV2\\PUPILS;Database=Tests_328177589;Trusted_Connection=True;TrustServerCertificate=True").Options;
             Context = new MyShopContext(options);
             Context.Database.EnsureCreated();
         }

@@ -22,6 +22,7 @@ const setTextTotals = () => {
 }
 
 const getCartItems = () => {
+
     const cartItems = JSON.parse(sessionStorage.getItem("cartItems") || "[]");
     drawCartItems(cartItems);
 }
@@ -81,10 +82,20 @@ const getTodaysDate = () => {
     return `${year}-${month}-${day}`
 }
 
-const placeOrder = async () => {
+
+const checkUserAuthentication = () => {
+    const userId = sessionStorage.getItem("UserId");
+    if (!userId) {
+        alert("You must log in or sign up");
+        window.location.href = "home.html";
+        return false;
+    }
+    return userId;
+};
+const getOrderDetails = () => {
+    if (!checkUserAuthentication()) return null;
     let id = sessionStorage.getItem("UserId")
     const date = getTodaysDate();
-    console.log(date)
     const products = []
     const cart = JSON.parse(sessionStorage.getItem("cartItems") || "[]");
     cart.forEach(item => {
@@ -99,6 +110,13 @@ const placeOrder = async () => {
         "orderSum": totalPrice,
         "orderItems": products
     }
+    return order;
+}
+
+
+const placeOrder = async () => {
+
+    const order = getOrderDetails();
     try {
         const responsePost = await fetch(`/api/Ordrs`, {
             method: 'POST',

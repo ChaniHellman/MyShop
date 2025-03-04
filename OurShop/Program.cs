@@ -15,7 +15,7 @@ if (environment == "Home")
 {
     connectionString = builder.Configuration.GetConnectionString("Home");
 }
-else if (environment == "School")
+else if (environment == "Development")
 {
     connectionString = builder.Configuration.GetConnectionString("School");
 }

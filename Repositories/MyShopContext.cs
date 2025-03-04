@@ -80,8 +80,8 @@ public partial class MyShopContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.Property(e => e.Email).HasMaxLength(15);
-            entity.Property(e => e.LastName).HasMaxLength(15);
+            entity.Property(e => e.Email).HasMaxLength(30);
+            entity.Property(e => e.LastName).HasMaxLength(20);
             entity.Property(e => e.Password).HasMaxLength(50);
         });
 

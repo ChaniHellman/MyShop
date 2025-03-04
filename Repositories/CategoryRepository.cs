@@ -18,7 +18,7 @@ namespace Repositories
 
         public async Task<List<Category>> getCategories()
         {
-            List<Category> allCategories = await _shopContext.Categories.Include(c=>c.Products).ToListAsync<Category>();
+            List<Category> allCategories = await _shopContext.Categories.ToListAsync();
             return allCategories;
         }
     }

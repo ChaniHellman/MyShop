@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using DTO;
 using Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services;
@@ -9,6 +10,7 @@ namespace OurShop.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class OrdrsController : Controller
     {
          IOrderService _OrderService;

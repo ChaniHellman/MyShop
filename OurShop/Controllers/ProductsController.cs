@@ -22,11 +22,11 @@ namespace OurShop.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> Get(string? desc, int? minPrice, int? maxPrice, [FromQuery] int?[] categoryIds)
+        public async Task<ActionResult<IEnumerable<ProductDto>>> Get(string? desc, int? minPrice, int? maxPrice, [FromQuery] int?[] categoryIds)
         {
-            List<Product> checkProduct = await _productService.getProducts(desc, minPrice, maxPrice, categoryIds);
-            if (checkProduct != null)
-                return Ok(_mapper.Map<List<Product>, List<ProductDto>>(checkProduct));
+            var products = await _productService.getProducts(desc, minPrice, maxPrice, categoryIds);
+            if (products != null)
+                return Ok(products);
             else
                 return NotFound();
         }

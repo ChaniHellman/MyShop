@@ -64,6 +64,11 @@ namespace Repositories
             await _shopContext.SaveChangesAsync();
         }
 
+        public async Task<User?> getUserByEmail(string email)
+        {
+            return await _shopContext.Users.FirstOrDefaultAsync(u => u.Email == email);
+        }
+
 
 
     }

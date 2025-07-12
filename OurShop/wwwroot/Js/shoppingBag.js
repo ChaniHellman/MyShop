@@ -106,16 +106,19 @@ const getOrderDetails = () => {
     })
     const order = {
         "orderDate": date,
-        "userId": id,
-        "orderSum": totalPrice,
-        "orderItems": products
+        "userId": Number(id),
+        "orderSum": Math.round(totalPrice),
+        "OrderItems": products // Capital O
     }
     return order;
 }
 
+const handleUnauthorized = () => {
+    sessionStorage.clear();
+    window.location.href = "https://localhost:44368/html/home.html";
+};
 
 const placeOrder = async () => {
-
     const order = getOrderDetails();
     try {
         const responsePost = await fetch(`/api/Ordrs`, {
@@ -123,12 +126,12 @@ const placeOrder = async () => {
             headers: {
                 'Content-Type': 'application/json'
             },
+            credentials: 'include',
             body: JSON.stringify(order)
-            
         });
-        if (responsePost.BadRequest) {
-            console.log(responsePost)
-            alert("Eror,please try again")
+        if (responsePost.status === 401) {
+            handleUnauthorized();
+            return;
         }
         if (!responsePost.ok)
             alert("Error, please try again")

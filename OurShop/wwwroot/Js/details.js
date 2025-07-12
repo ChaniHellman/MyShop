@@ -8,17 +8,28 @@ const writeWelcomeText = () => {
 writeWelcomeText();
 
 const showUpdate = async () => {
-    await fillUpdateInputs()
-    const updateDiv = document.getElementById("update")
-    updateDiv.className = "show"
-}
+    await fillUpdateInputs();
+    const updateDiv = document.getElementById("update");
+    updateDiv.className = "show";
+};
+
+const handleUnauthorized = () => {
+    sessionStorage.clear();
+    window.location.href = "https://localhost:44368/html/home.html";
+};
 
 const fillUpdateInputs = async () => {
     try {
-        const id = sessionStorage.getItem("UserId")
+        const id = sessionStorage.getItem("UserId");
         const response = await fetch(`${API_URL}/${id}`, {
-            method: 'GET'
+            method: 'GET',
+            credentials: 'include'
         });
+
+        if (response.status === 401) {
+            handleUnauthorized();
+            return;
+        }
 
         if (response.ok) {
             const userData = await response.json();
@@ -28,8 +39,8 @@ const fillUpdateInputs = async () => {
         }
     }
     catch (error) {
-        alert(error)
-        console.log(error)
+        alert(error);
+        console.log(error);
     }
 }
 
@@ -64,14 +75,20 @@ const updateUser = async () => {
     }
 
     try {
-        const id = sessionStorage.getItem("UserId")
+        const id = sessionStorage.getItem("UserId");
         const response = await fetch(`${API_URL}/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
+            credentials: 'include',
             body: JSON.stringify(userForUpdate)
         });
+
+        if (response.status === 401) {
+            handleUnauthorized();
+            return;
+        }
 
         if (response.ok) {
             alert(`User ${userForUpdate.firstName} updated successfully`);

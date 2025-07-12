@@ -119,7 +119,7 @@ const login = async () => {
                 window.location.href = "Products.html?fromShoppingBag=1";
             }
             else {
-                window.location.href = "products.html";
+                window.location.href = "Products.html";
             }
 
         }
